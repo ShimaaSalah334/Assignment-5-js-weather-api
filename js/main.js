@@ -46,18 +46,12 @@ const errorCallback = (error) => {
   <div class="error-message alert alert-danger border-0 text-center mx-auto rounded-4 py-2 shadow-lg">
     <h2>Location Access Denied</h2>
     <p>Please enable location services in your browser or device settings to use this feature.</p>
+      <p>If you have already done so, please <strong>reload</strong> the page.</p>
   </div>`;
 };
 navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
 
 // Search Function
-searchInput.addEventListener("keyup", function (e) {
-  if (e.target.value) {
-    searchWeather(apiKey, e.target.value);
-  } else {
-    navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
-  }
-});
 async function searchWeather(key, query) {
   try {
     var response = await fetch(
@@ -83,6 +77,14 @@ async function searchWeather(key, query) {
   </div>`;
   }
 }
+searchInput.addEventListener("keyup", function (e) {
+  var term = e.target.value;
+  if (term.trim()) {
+    searchWeather(apiKey, e.target.value);
+  } else {
+    navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+  }
+});
 
 // Display Function
 function display(arr, location) {
@@ -132,5 +134,3 @@ function display(arr, location) {
   }
   row.innerHTML = cartoona;
 }
-
-
