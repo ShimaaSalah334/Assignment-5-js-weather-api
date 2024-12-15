@@ -88,7 +88,8 @@ body {
   min-height: 350px;
   padding: 70px 0px;
 }
-input {
+
+input,.contact-input {
   background-color: #1e202b;
   color: white;
   border: none;
@@ -228,6 +229,99 @@ button {
     font-size: 14px;
   }
 }
+/********************* Contact Page ************************/
+
+.contact{
+  padding:20px 0px 70px;
+}
+.contact .contact-input{
+  background-color: #262936;
+} 
+.contact .contact-input a,.contact .contact-input span{
+  color: #bfc1c8;
+  font-size: 13px;
+  font-weight: 300;
+}
+.contact .contact-details{
+  background-color: #262936;
+  color: #bfc1c8;
+  font-size: 14px;
+  font-weight: 300;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.contact .contact-details .map iframe{
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  height: 220px;
+  width: 100%;
+
+}
+.contact .contact-details .contact-info{
+  padding: 20px;
+}
+.contact-info a{
+  text-decoration: none;
+  color: inherit;
+}
+.contact-info i{
+  color: #019BD8;
+}
+.contact .contact-right h2{
+  color: white;
+  font-size: 36px;
+  font-weight: 300;
+  margin-bottom: 20px;
+}
+.contact .contact-right p{
+  color: #bfc1c8;
+  font-size: 14px;
+  font-weight: 300;
+  margin-bottom: 14px;
+}
+.contact .form-control{
+  color: white;
+  font-size: 14px;
+  padding: 14px;
+  border: 2px solid #393c48;
+  background-color: transparent;
+  border-radius: 30px;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  -ms-border-radius: 30px;
+  -o-border-radius: 30px;
+}
+.contact .form-control:hover{
+  border: 2px solid #009ad8;
+
+}
+.contact .form-control:focus{
+  border: 2px solid #009ad8;
+  box-shadow: none;
+
+}
+.contact .form-control::placeholder {
+  color:#757575;
+}
+.contact textarea{
+ min-height: 150px;
+
+}
+.contact .btn{
+  padding: 10px 20px;
+}
+.contact .btn-primary{
+  color: white;
+  background-color: #009ad8;
+  font-size: 14px;
+  border-radius: 30px;
+
+}
+.contact .btn:first-child:active, :not(.btn-check)+.btn:active {
+  color: white;
+  background-color: #009ad8;
+  border-color: #009ad8;
+}
 
 /********************* Footer ************************/
 footer {
@@ -281,7 +375,7 @@ footer p {
   height: 5px;
   width: 100%;
   --c:no-repeat linear-gradient(#009ad8 0 0);
-  background: var(--c),var(--c),#d7b8fc;
+  background: var(--c),var(--c),#f1edf7;
   background-size: 60% 100%;
   animation: l16 3s infinite;
 }
