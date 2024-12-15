@@ -1,43 +1,6 @@
 var apiKey = "2224505cee9f4588bff124921241312";
 var row = document.getElementById("row");
 var searchInput = document.getElementById("searchInput");
-const successCallback = async (poistion) => {
-  const longitude = poistion.coords.longitude;
-  const latitude = poistion.coords.latitude;
-  try {
-    var response = await fetch(
-      `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${latitude},${longitude}&days=3`
-    );
-    response = await response.json();
-    const location = response.location;
-    const forecast = response.forecast.forecastday;
-    display(forecast, location);
-    console.log(response);
-  } catch (error) {
-    console.error("Error fetching weather data:", error);
-  }
-};
-const errorCallback = (error) => {
-  console.error("Geolocation error:", error);
-};
-
-navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
-
-async function getWeather(key, query) {
-  try {
-    var response = await fetch(
-      `https://api.weatherapi.com/v1/forecast.json?key=${key}&q=${query}&days=3`
-    );
-    response = await response.json();
-    const location = response.location;
-    const forecast = response.forecast.forecastday;
-    display(forecast, location);
-    console.log(response);
-  } catch (error) {
-    console.error("Error fetching weather data:", error);
-  }
-}
-
 var directionMap = {
   N: "North",
   NE: "Northeast",
@@ -56,9 +19,74 @@ var directionMap = {
   WNW: "West-Northwest",
   NNW: "North-Northwest",
 };
+
+//Determine the user's location
+const successCallback = async (poistion) => {
+  const longitude = poistion.coords.longitude;
+  const latitude = poistion.coords.latitude;
+  try {
+    var response = await fetch(
+      `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${latitude},${longitude}&days=3`
+    );
+    response = await response.json();
+    const location = response.location;
+    const forecast = response.forecast.forecastday;
+    display(forecast, location);
+  } catch (error) {
+    console.error("Error fetching weather data:", error);
+    row.innerHTML = `  <div class=" error-message alert alert-danger border-0 text-center mx-auto rounded-4 py-2 shadow-lg">
+            <h2>Error fetching data</h2>
+            <p>Please try again later</p>
+          </div>`;
+  }
+};
+const errorCallback = (error) => {
+  console.error("Geolocation error:", error);
+  row.innerHTML = `
+  <div class="error-message alert alert-danger border-0 text-center mx-auto rounded-4 py-2 shadow-lg">
+    <h2>Location Access Denied</h2>
+    <p>Please enable location services in your browser or device settings to use this feature.</p>
+  </div>`;
+};
+navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+
+// Search Function
+searchInput.addEventListener("keyup", function (e) {
+  if (e.target.value) {
+    searchWeather(apiKey, e.target.value);
+  } else {
+    navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+  }
+});
+async function searchWeather(key, query) {
+  try {
+    var response = await fetch(
+      `https://api.weatherapi.com/v1/forecast.json?key=${key}&q=${query}&days=3`
+    );
+    response = await response.json();
+    if (response.error || !response.location || !response.forecast) {
+      row.innerHTML = `
+      <div class="error-message alert alert-danger border-0 text-center mx-auto rounded-4 py-2 shadow-lg">
+        <h2>Location Not Found</h2>
+        <p>We couldn't find weather data for "${query}". Please check your input and try again.</p>
+      </div>`;
+      return;
+    }
+    const location = response.location;
+    const forecast = response.forecast.forecastday;
+    display(forecast, location);
+  } catch (error) {
+    console.error("Error fetching weather data:", error);
+    row.innerHTML = `  <div class=" error-message alert alert-danger border-0 text-center mx-auto rounded-4 py-2 shadow-lg">
+    <h2>Error fetching data</h2>
+    <p>Please try again later</p>
+  </div>`;
+  }
+}
+
+// Display Function
 function display(arr, location) {
   var cartoona = "";
-
   for (let i = 0; i < arr.length; i++) {
     var date = new Date(arr[i].date);
     var day = date.toLocaleDateString("en-US", { weekday: "long" });
@@ -105,6 +133,4 @@ function display(arr, location) {
   row.innerHTML = cartoona;
 }
 
-searchInput.addEventListener("keyup", function (e) {
-  getWeather(apiKey, e.target.value);
-});
+

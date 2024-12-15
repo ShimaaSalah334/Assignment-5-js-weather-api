@@ -1,6 +1,7 @@
 body {
   font-family: "Roboto", sans-serif;
   background-color: #1e202b;
+  position: relative;
 }
 /********************* NavBar ************************/
 .navbar {
@@ -172,6 +173,10 @@ button {
   margin-right: 20px;
   font-size: 14px;
 }
+.forecasts .error-message{
+  background-color: rgba(192, 194, 201,0.5);
+}
+
 @media screen and (max-width: 992px) {
   .forecasts .weather-card.card1 .card-header {
     border-top-left-radius: 10px;
@@ -189,7 +194,11 @@ button {
     border-bottom-left-radius: 10px;
   }
 }
-
+@media screen and (min-width: 768px) {
+  .forecasts .error-message{
+    width: 70%;
+  }
+}
 @media screen and (min-width: 992px) {
   .forecasts .weather-card .card-body .temperature span {
     font-size: 70px;
@@ -201,6 +210,10 @@ button {
   .forecasts .weather-card .card-body .Weather-Details span {
     margin-right: 2px;
   }
+  .forecasts .error-message{
+    width: 50%;
+  }
+ 
 }
 @media screen and (min-width: 1200px) {
   .forecasts .weather-card .card-body .temperature span {
@@ -258,4 +271,22 @@ footer p {
   font-size: 14px;
   font-weight: 300;
   margin-top: 30px;
+}
+
+
+/********************* Loader ************************/
+.loader {
+  position: absolute;
+  top: 0;
+  height: 5px;
+  width: 100%;
+  --c:no-repeat linear-gradient(#009ad8 0 0);
+  background: var(--c),var(--c),#d7b8fc;
+  background-size: 60% 100%;
+  animation: l16 3s infinite;
+}
+@keyframes l16 {
+  0%   {background-position:-150% 0,-150% 0}
+  66%  {background-position: 250% 0,-150% 0}
+  100% {background-position: 250% 0, 250% 0}
 }
